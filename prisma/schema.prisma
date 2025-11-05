@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role     @default(USER)
+  deviceHash   String   @unique
+  isPremium    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  attempts     Attempt[]
+}
+
+enum Role { USER ADMIN }
+
+model Session {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  token      String   @unique
+  createdAt  DateTime @default(now())
+  expiresAt  DateTime
+}
+
+model DailySet {
+  id        String   @id @default(cuid())
+  dateKey   String   @unique // YYYY-MM-DD
+  createdAt DateTime @default(now())
+  questions Question[]
+}
+
+model Subtest {
+  id          String    @id @default(cuid())
+  code        String    @unique
+  name        String
+  durationMin Int
+  order       Int
+  questions   Question[]
+}
+
+model Question {
+  id          String   @id @default(cuid())
+  dailySetId  String
+  dailySet    DailySet @relation(fields: [dailySetId], references: [id])
+  subtestId   String
+  subtest     Subtest  @relation(fields: [subtestId], references: [id])
+  type        QType
+  stem        String
+  meta        Json
+  explanation String?
+  choices     Choice[]
+}
+
+enum QType { MCQ COMPLEX TRUE_FALSE SHORT }
+
+model Choice {
+  id         String   @id @default(cuid())
+  questionId String
+  question   Question  @relation(fields: [questionId], references: [id])
+  label      String    // "A".."E" or row/col key for COMPLEX
+  text       String
+  isCorrect  Boolean
+}
+
+model Attempt {
+  id         String   @id @default(cuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  dateKey    String
+  startedAt  DateTime @default(now())
+  submittedAt DateTime?
+  answers    Answer[]
+  @@unique([userId, dateKey]) // 1 attempt per akun per hari
+}
+
+model Answer {
+  id         String   @id @default(cuid())
+  attemptId  String
+  attempt    Attempt  @relation(fields: [attemptId], references: [id])
+  questionId String
+  qtype      QType
+  // For MCQ/TRUE_FALSE: store selected labels, for SHORT: store text
+  payload    Json
+  isCorrect  Boolean?
+  @@unique([attemptId, questionId], name: "attemptId_questionId")
+}
