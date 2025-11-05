@@ -1,0 +1,20 @@
+:root{ --bg:#ffffff; --text:#111827; --muted:#6b7280; --ring:#2563eb; --card:#ffffff; --border:#e5e7eb; }
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+.container{max-width:980px;margin:0 auto;padding:24px}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+.btn{border:1px solid var(--border);padding:10px 14px;border-radius:12px;background:#fff;cursor:pointer;transition:.2s;}
+.btn:hover{box-shadow:0 8px 30px rgba(0,0,0,.06)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;box-shadow:0 10px 40px rgba(17,24,39,.04)}
+.grid{display:grid;gap:16px}
+.grid.bento{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.input,select{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:12px}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border:1px solid var(--border);border-radius:9999px;color:var(--muted)}
+.table{width:100%;border-collapse:separate;border-spacing:0 8px}
+.table tr{background:#fff;border:1px solid var(--border)}
+.table td{padding:12px 14px}
+.small{color:var(--muted);font-size:12px}
+.kbd{font-family:ui-monospace,Menlo,Consolas,monospace;border:1px solid var(--border);border-radius:6px;padding:0 6px;background:#f9fafb}
+.hero{display:flex;gap:18px;align-items:center}
+.hero h1{font-size:28px;margin:0}
+.hidden{display:none}
