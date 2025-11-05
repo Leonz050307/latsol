@@ -12,7 +12,7 @@ return [
     'base_url' => getenv('BASE_URL') ?: '/',
     'env' => getenv('APP_ENV') ?: 'prod',
     'session_name' => 'snbt_sid',
-    'csrf_key' => getenv('CSRF_KEY') ?: 'change-this',
+    'csrf_key' => getenv('CSRF_KEY') ?: 'a4f72b9c3d1e6f4a8b9c2d3e7f1a0b6c9e4d5f3a2b1c8e7f9a0d6c3b2e1f4a7',
   ],
   'ai' => [
     'provider' => 'openai',
