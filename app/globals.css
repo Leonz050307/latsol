@@ -1,0 +1,7 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+:root{ --blur:20px; --glass:#ffffff40; --stroke:#ffffff60; --bg:#0b1220; --fg:#eef2ff }
+html,body{ background: radial-gradient(1200px 800px at 20% 10%, #1a2540 0%, #0b1220 60%), #0b1220; color: var(--fg) }
+.glass{ backdrop-filter: blur(var(--blur)); background: var(--glass); border:1px solid var(--stroke); border-radius:1rem }
+.card{ @apply glass p-5 shadow-xl hover:shadow-2xl transition-all }
+.bento{ display:grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap:1rem }
+@media (max-width:768px){ .bento{ grid-template-columns: repeat(2,minmax(0,1fr)) } }
